@@ -1,6 +1,7 @@
 import { load, remove } from './main.tsx';
 import { queryChatContainer, queryQuestionEls } from './helpers';
 import { isSharePage, scrollMarginTop } from './helpers/sharePage.ts';
+import adapterManager from './adapters';
 
 let loaded = false;
 let conversationId: string | null = null;
@@ -8,7 +9,20 @@ let conversationId: string | null = null;
 setInterval(() => {
   const latestConversationId = getConversationIdByUrl();
 
-  const questionEls = (queryChatContainer() && queryQuestionEls()) ?? [];
+  // 选择适当的适配器
+  const adapter = adapterManager.selectAdapter();
+
+  // 使用适配器获取问题元素，如果没有适配器则使用默认方法
+  let questionEls: HTMLElement[] = [];
+
+  if (adapter) {
+    if (adapter.isPageReady()) {
+      questionEls = adapter.getQuestionElements();
+    }
+  } else {
+    // 使用原始的方法作为后备
+    questionEls = (queryChatContainer() && queryQuestionEls()) ?? [];
+  }
 
   const hasQuestion = questionEls.length > 0;
 

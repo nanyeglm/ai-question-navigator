@@ -1,6 +1,7 @@
 import { SiteAdapter } from './types';
 import GrokAdapter from './grok';
 import ChatGPTAdapter from './chatgpt';
+import GeminiAdapter from './gemini';
 
 /**
  * 适配器管理器
@@ -14,6 +15,7 @@ class AdapterManager {
         // 注册默认适配器
         this.registerAdapter(new ChatGPTAdapter());
         this.registerAdapter(new GrokAdapter());
+        this.registerAdapter(new GeminiAdapter());
     }
 
     /**
@@ -49,7 +51,7 @@ class AdapterManager {
      * 获取当前使用的适配器
      */
     getCurrentAdapter(): SiteAdapter | null {
-        return this.currentAdapter;
+        return this.selectAdapter();
     }
 
     /**
@@ -63,4 +65,4 @@ class AdapterManager {
 // 创建单例实例
 const adapterManager = new AdapterManager();
 
-export default adapterManager; 
+export default adapterManager;

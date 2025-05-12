@@ -16,10 +16,10 @@
 /* 活跃问题高亮样式 */
 :host li[data-active="true"] {
     background-color: var(--grok-bg-active);
-    color: #19c37d !important;
+    color: var(--grok-brand-color) !important;
     font-weight: 500;
     padding-left: 14px;
-    border-left: 2px solid #19c37d;
+    border-left: none !important;
     transform: translateX(2px);
 }
 
@@ -61,4 +61,33 @@
 /* 列表项之间的分隔 */
 :host li:not(:last-child) {
     margin-bottom: 4px;
+}
+
+:host,
+:host ul,
+:host footer,
+:host .sidebar-footer,
+:host>div {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+:host li {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+:host li:last-of-type {
+    padding-bottom: 0 !important;
+}
+
+/* 选择器根据你提供的 class 拼接 */
+div.relative::after {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    content: '' !important;
 }

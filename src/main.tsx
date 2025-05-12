@@ -38,7 +38,7 @@ export function load() {
     if (siteId === 'gemini') {
       dom.style.cssText = `
         --app-width: 150px;
-        --app-max-list-height: 1300px;
+        --app-max-list-height: 400px;
         z-index: 2000;
         position: fixed;
         top: 80px;
@@ -55,33 +55,25 @@ export function load() {
         background: transparent;
       `;
     } else {
-      // 原来的ChatGPT样式
+      // 修改ChatGPT样式，使其固定在右侧而非横跨整个屏幕
       dom.style.cssText = `
         --app-width: 120px;
         --app-max-list-height: 300px;
         position: fixed;
-        display: flex;
-        justify-content: end;
         top: 66px;
-        left: 16px;
-        right: 16px;
-        padding-right: 16px;
-        z-index: 1;
+        right: 20px;
+        z-index: 2000;
       `;
     }
   } else {
-    // 默认样式
+    // 默认样式也修改为固定位置
     dom.style.cssText = `
       --app-width: 120px;
       --app-max-list-height: 300px;
       position: fixed;
-      display: flex;
-      justify-content: end;
       top: 66px;
-      left: 16px;
-      right: 16px;
-      padding-right: 16px;
-      z-index: 1;
+      right: 20px;
+      z-index: 2000;
     `;
   }
 

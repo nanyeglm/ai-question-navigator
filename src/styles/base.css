@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 通用基础样式，不包含具体平台的样式变量 */
+:host {
+    /* 基础布局 */
+    padding: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+}

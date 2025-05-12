@@ -1,0 +1,16 @@
+:host {
+    /* ChatGPT特定样式变量 */
+    --app-width: 120px;
+    --app-max-list-height: 1300px;
+
+    /* 位置样式 */
+    position: fixed;
+    top: 66px;
+    right: 20px;
+    z-index: 2000;
+
+    /* 基础样式 */
+    padding: 8px 8px 0;
+    border-radius: 6px;
+    background: transparent;
+}

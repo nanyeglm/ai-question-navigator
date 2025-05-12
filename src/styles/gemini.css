@@ -1,0 +1,16 @@
+:host {
+    /* Gemini特定样式变量 */
+    --app-width: 150px;
+    --app-max-list-height: 1400px;
+
+    /* 位置样式 */
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 2000;
+
+    /* 基础样式 */
+    padding: 8px 8px 0;
+    border-radius: 6px;
+    background: transparent;
+}

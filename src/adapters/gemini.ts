@@ -34,19 +34,57 @@ export default class GeminiAdapter implements SiteAdapter {
      * 获取当前活跃问题的索引
      */
     getCurrentQuestionIndex(elements: HTMLElement[]): number {
-        const topThreshold = 75; // Gemini的顶部阈值
-        // 找到第一个在视图中的问题
-        const index = elements.findIndex(
-            (el) => el.getBoundingClientRect().top >= topThreshold
-        );
+        if (elements.length === 0) return -1;
 
-        if (index > -1) {
-            return index === 0 ? 0 : index - 1;
-        } else if (elements.length > 0) {
-            // 如果没有找到，但有问题，则将最后一个问题设置为活动问题
-            return elements.length - 1;
+        // 设置视口区域的中点作为参考
+        const viewportHeight = window.innerHeight;
+        const viewportCenter = viewportHeight / 2;
+
+        // 计算每个元素与视口中心的距离
+        const distances = elements.map(el => {
+            const rect = el.getBoundingClientRect();
+            const elementCenter = rect.top + rect.height / 2;
+            // 返回元素中心点到视口中心的距离
+            return Math.abs(elementCenter - viewportCenter);
+        });
+
+        // 找到距离视口中心最近的元素
+        let closestIndex = -1;
+        let minDistance = Number.MAX_VALUE;
+
+        distances.forEach((distance, index) => {
+            // 元素完全不在视口中的情况
+            const rect = elements[index]?.getBoundingClientRect();
+            if (!rect || rect.bottom < 0 || rect.top > viewportHeight) {
+                return;
+            }
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        // 如果没有找到视野中的元素，寻找最接近顶部的元素
+        if (closestIndex === -1) {
+            // Gemini常有一个特定的顶部阈值
+            const topThreshold = 75;
+            const topIndex = elements.findIndex(el => {
+                const rect = el.getBoundingClientRect();
+                return rect.top >= topThreshold;
+            });
+
+            if (topIndex > -1) {
+                return topIndex === 0 ? 0 : topIndex - 1;
+            } else if (elements.length > 0) {
+                // 如果所有元素都在视口上方，返回最后一个元素
+                return elements.length - 1;
+            }
+
+            return 0;
         }
-        return -1;
+
+        return closestIndex;
     }
 
     /**

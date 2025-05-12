@@ -1,18 +1,60 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import baseStyle from './styles/index.css?inline';
+import baseStyle from './styles/base.css?inline';
+import chatgptStyle from './styles/chatgpt.css?inline';
+import chatgptSidebarEnhancedStyle from './styles/chatgpt-sidebar-enhanced.css?inline';
+import grokStyle from './styles/grok.css?inline';
+import grokSidebarEnhancedStyle from './styles/grok-sidebar-enhanced.css?inline';
+import geminiStyle from './styles/gemini.css?inline';
+import geminiSidebarEnhancedStyle from './styles/gemini-sidebar-enhanced.css?inline';
 import adapterManager from './adapters';
 
 const DOM_MARK = 'data-chatgpt-question-directory';
 
-function mount(el: Element) {
+function mount(el: Element, siteId: string | null) {
   el.attachShadow({ mode: 'open' });
   const shadowRoot = el.shadowRoot!;
 
-  const sheet = new CSSStyleSheet();
-  sheet.replaceSync(baseStyle);
-  shadowRoot.adoptedStyleSheets = [sheet];
+  // 创建CSS样式表并应用基础样式
+  const baseSheet = new CSSStyleSheet();
+  baseSheet.replaceSync(baseStyle);
+
+  // 根据站点ID选择对应的样式
+  let siteStyleSheet: CSSStyleSheet | null = null;
+  let enhancedStyleSheet: CSSStyleSheet | null = null;
+
+  if (siteId === 'gemini') {
+    siteStyleSheet = new CSSStyleSheet();
+    siteStyleSheet.replaceSync(geminiStyle);
+
+    // 为Gemini添加增强样式表
+    enhancedStyleSheet = new CSSStyleSheet();
+    enhancedStyleSheet.replaceSync(geminiSidebarEnhancedStyle);
+  } else if (siteId === 'grok') {
+    siteStyleSheet = new CSSStyleSheet();
+    siteStyleSheet.replaceSync(grokStyle);
+
+    // 为Grok添加增强样式表
+    enhancedStyleSheet = new CSSStyleSheet();
+    enhancedStyleSheet.replaceSync(grokSidebarEnhancedStyle);
+  } else {
+    // 默认使用ChatGPT样式
+    siteStyleSheet = new CSSStyleSheet();
+    siteStyleSheet.replaceSync(chatgptStyle);
+
+    // 为ChatGPT添加增强样式表
+    enhancedStyleSheet = new CSSStyleSheet();
+    enhancedStyleSheet.replaceSync(chatgptSidebarEnhancedStyle);
+  }
+
+  // 应用样式表
+  const styleSheets = [baseSheet, siteStyleSheet];
+  if (enhancedStyleSheet) {
+    styleSheets.push(enhancedStyleSheet);
+  }
+
+  shadowRoot.adoptedStyleSheets = styleSheets;
 
   ReactDOM.createRoot(shadowRoot).render(
     <React.StrictMode>
@@ -30,54 +72,10 @@ export function load() {
 
   // 获取当前适配器
   const adapter = adapterManager.getCurrentAdapter();
+  const siteId = adapter?.getSiteId() || null;
 
-  // 根据适配器设置样式
-  if (adapter) {
-    const siteId = adapter.getSiteId();
-
-    if (siteId === 'gemini') {
-      dom.style.cssText = `
-        --app-width: 150px;
-        --app-max-list-height: 400px;
-        z-index: 2000;
-        position: fixed;
-        top: 80px;
-        right: 20px;
-      `;
-    } else if (siteId === 'grok') {
-      dom.style.cssText = `
-        --app-width: 170px;
-        --app-max-list-height: 500px;
-        z-index: 2000;
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        background: transparent;
-      `;
-    } else {
-      // 修改ChatGPT样式，使其固定在右侧而非横跨整个屏幕
-      dom.style.cssText = `
-        --app-width: 120px;
-        --app-max-list-height: 300px;
-        position: fixed;
-        top: 66px;
-        right: 20px;
-        z-index: 2000;
-      `;
-    }
-  } else {
-    // 默认样式也修改为固定位置
-    dom.style.cssText = `
-      --app-width: 120px;
-      --app-max-list-height: 300px;
-      position: fixed;
-      top: 66px;
-      right: 20px;
-      z-index: 2000;
-    `;
-  }
-
-  mount(dom);
+  // 使用mount函数应用样式，而不是使用内联样式
+  mount(dom, siteId);
   document.body.append(dom);
 }
 

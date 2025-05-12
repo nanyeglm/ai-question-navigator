@@ -24,11 +24,12 @@ export default defineConfig({
         namespace: 'npm/ai-question-navigator',
         match: [
           'https://chatgpt.com/**',
-          'https://grok.com/**'
+          'https://grok.com/**',
+          'https://gemini.google.com/**',
         ],
         author: 'okokdi',
-        supportURL: 'https://github.com/JianJroh/chatgpt-question-navigator/issues',
-        license: 'GPL-3.0-or-later',
+        supportURL: 'https://github.com/nanyeglm/ai-question-navigator',
+        license: 'MIT',
       },
     }),
   ],

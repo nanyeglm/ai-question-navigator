@@ -38,7 +38,7 @@ export function load() {
     if (siteId === 'gemini') {
       dom.style.cssText = `
         --app-width: 150px;
-        --app-max-list-height: 400px;
+        --app-max-list-height: 1300px;
         z-index: 2000;
         position: fixed;
         top: 80px;
@@ -52,6 +52,7 @@ export function load() {
         position: fixed;
         top: 80px;
         right: 20px;
+        background: transparent;
       `;
     } else {
       // 原来的ChatGPT样式

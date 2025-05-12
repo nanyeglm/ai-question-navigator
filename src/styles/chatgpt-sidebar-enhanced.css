@@ -3,8 +3,8 @@
 /* ChatGPT品牌色 */
 :root {
     --chatgpt-brand-color: #10a37f;
-    --chatgpt-bg-hover: rgba(16, 163, 127, 0.05);
-    --chatgpt-bg-active: rgba(16, 163, 127, 0.1);
+    --chatgpt-bg-hover: transparent;
+    --chatgpt-bg-active: transparent;
 }
 
 /* 列表项基础样式 */
@@ -37,7 +37,7 @@
 }
 
 :host ul::-webkit-scrollbar-thumb {
-    background-color: rgba(16, 163, 127, 0.5);
+    background-color: transparent;
     border-radius: 4px;
 }
 

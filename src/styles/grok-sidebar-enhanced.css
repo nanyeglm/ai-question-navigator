@@ -1,4 +1,9 @@
 /* Grok侧边栏增强样式 */
+:root {
+    --grok-brand-color: #10a37f;
+    --grok-bg-hover: transparent;
+    --grok-bg-active: transparent;
+}
 
 /* 列表项基础样式 */
 :host li {
@@ -10,7 +15,7 @@
 
 /* 活跃问题高亮样式 */
 :host li[data-active="true"] {
-    background-color: rgba(25, 195, 125, 0.1);
+    background-color: var(--grok-bg-active);
     color: #19c37d !important;
     font-weight: 500;
     padding-left: 14px;
@@ -20,7 +25,7 @@
 
 /* 悬停动画效果 */
 :host li:hover {
-    background-color: rgba(25, 195, 125, 0.05);
+    background-color: var(--grok-bg-hover);
     transform: translateX(2px);
 }
 
@@ -30,7 +35,7 @@
 }
 
 :host ul::-webkit-scrollbar-thumb {
-    background-color: rgba(25, 195, 125, 0.5);
+    background-color: transparent;
     border-radius: 4px;
 }
 

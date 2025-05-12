@@ -2,9 +2,9 @@
 
 /* Gemini品牌色 */
 :root {
-    --gemini-brand-color: #8e44ad;
-    --gemini-bg-hover: rgba(142, 68, 173, 0.05);
-    --gemini-bg-active: rgba(142, 68, 173, 0.1);
+    --gemini-brand-color: #10a37f;
+    --gemini-bg-hover: transparent;
+    --gemini-bg-active: transparent;
 }
 
 /* 列表项基础样式 */
@@ -37,7 +37,7 @@
 }
 
 :host ul::-webkit-scrollbar-thumb {
-    background-color: rgba(142, 68, 173, 0.5);
+    background-color: transparent;
     border-radius: 4px;
 }
 
